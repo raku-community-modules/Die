@@ -10,7 +10,7 @@ Die - Perl 5 like die routine for note + exit
     use Die;
 
     die "I don't like you, bruh\n"; # new line at the end == no stack trace
-    die "something looks broken";   # no new line at end == full stack trace
+    die "something looks broken";   # no new line at end == stack trace
     die X::SomeShinyException.new;  # this still works like normal
 ```
 
