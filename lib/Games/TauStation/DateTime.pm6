@@ -2,15 +2,15 @@ unit class GCT is DateTime;
 
 # 198.14/07:106GCT = 1524361376.925148
 my constant catastrophe = DateTime.new: '1964-01-22T01:42:56.925148Z';
-my regex sign    { <.ws>? <[-−+]>? <.ws>? }
-my regex cycle   { <.ws>? \d**{1..*} <.ws>? }
+my regex sign    { <.ws>? <[-−+]>? }
+my regex cycle   { \d**{1..*} <.ws>? }
 my regex day     { <.ws>? \d**{1..2} <.ws>? }
 my regex segment { <.ws>? \d**{1..2} <.ws>? }
 my regex unit    { <.ws>? \d**{1..3} <.ws>? }
 my regex gct-re {
   ^
-    [$<rel>='D']? <sign> [ [<cycle> '.']? <day> ]?
-    '/' <segment> ':' <unit> [:i 'GCT' <.ws>?]?
+    :i [$<rel>='D']? [ [<sign> <cycle> '.']? <day> ]?
+    '/' <segment> ':' <unit> ['GCT' <.ws>?]?
   $
 }
 my $formatter = my method {
@@ -33,9 +33,8 @@ multi method new (|c) {
 }
 multi method new (Str:D $_ --> ::?CLASS:D) {
     when &gct-re {
-      my \Δ := (
-        ($<sign>//'').trim eq '-' || ($<sign>//'').trim eq '−' ?? -1 !! 1
-      ) * ((($<cycle>//0)*100 + ($<day>//0) + $<segment>/100)*24*60*60
+      my \Δ := (($<sign>//'') eq '-' || ($<sign>//'') eq '−' ?? -1 !! 1)
+        * ((($<cycle>//0)*100 + ($<day>//0) + $<segment>/100)*24*60*60
         + $<unit>*.864);
       self.new: ($<rel> ?? now !! catastrophe.Instant) + Δ, :$formatter
     }
