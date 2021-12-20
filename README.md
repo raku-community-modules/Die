@@ -26,7 +26,8 @@ In Raku, you do the same with `note "foo" and exit 1`... or use this shiny modul
 EXPORTS
 =======
 
--head2 &die
+&die
+----
 
 ```raku
 die "I don't like you, bruh\n"; # new line at the end == no stack trace

@@ -32,7 +32,7 @@ module that adds Perl behaviour to `&die`
 
 =head1 EXPORTS
 
--head2 &die
+=head2 &die
 
 =begin code :lang<raku>
 
