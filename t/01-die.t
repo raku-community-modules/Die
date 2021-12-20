@@ -1,5 +1,5 @@
-use lib <lib>;
 use Test;
+
 use Die;
 
 plan 4;
@@ -30,3 +30,5 @@ with run :err, $*EXECUTABLE, '-Ilib', '-MDie', '-e', 'die "foo\n"'
     $ = .err.close;
     is-deeply .exitcode, 1, 'exit code';
 }
+
+# vim: expandtab shiftwidth=4
